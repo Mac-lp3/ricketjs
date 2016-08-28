@@ -1,0 +1,11 @@
+{
+  "name": "ricket",
+  "version": "1.0.0",
+  "description": "Framework for simple chaining of executable file execution and middleware functions.",
+  "main": "ricket.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Mac-lp3",
+  "license": "ISC"
+}
