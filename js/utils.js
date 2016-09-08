@@ -45,6 +45,7 @@ module.exports = (function() {
 	};
 
 	return {
+		getBaseFileName: getBaseFileName,
 		isArray: isArray,
 		isObject: isObject,
 		isString: isString,
