@@ -6,7 +6,7 @@ Simple plug-and-play javascript framework for running executable files
 ricket.add({
     path: 'path\\to\\executable.exe',
     args: ['okok'], // optional
-    before: function(){/* optional */},
-    after: function(){/* optional */}
+    before: function(args){ /* optional */ return args.push('additionalArg');},
+    after: function(output){ /* optional */ console.log(output);}
 }).run();
 ~~~~
