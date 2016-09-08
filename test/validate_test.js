@@ -10,10 +10,14 @@ describe('validate', function() {
         it('Should interpret each type', function() {
         	
         	let e = undefined;
+            let isValid = false;
         	
         	try {
 
-            	validate.filePath('test\\path');
+            	isValid = validate.filePath('test\\path');
+                assert(!isValid);
+                isValid = validate.filePath('test\\path\\name.txt');
+                assert(isValid);
 
             } catch (ex) {
 
