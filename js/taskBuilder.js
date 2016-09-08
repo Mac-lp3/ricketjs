@@ -18,25 +18,59 @@ module.exports = (function() {
 	const buildTask  = function(descriptor) {
 
 		const newTask = {};
+		newTask.befores = globalBeforeEachFunctions;
+		newTask.errorHandler = globalErrorHandler;
 
 		if (util.isFunction(descriptor)) {
 
 			// this is a middleware function
 			newTask.name = descriptor.name;
 			newTask.command = descriptor;
-			newTask.befores = globalBeforeEachFunctions;
 			newTask.afters = globalAfterEachFunctions;
-			newTask.errorHandler = globalErrorHandler;
 
 		} else if (util.isObject(descriptor)) {
 
 			// this is an executable configuration
+			newTask.name = descriptor.name;
+			newTask.command = buildExecutableCommand(descriptor);
+
+			// custom before runs LAST in before list
+			if (descriptor.before) {
+
+				if(util.isFunction(descriptor.before)) {
+
+					newTask.befores.push(descriptor.before);
+
+				} else {
+					globalErrorHandler('provided before function is not a function.');
+				}
+			}
+
+			// custom after runs FIRST in after list
+			if (descriptor.after) { 
+
+				if (util.isFunction(descriptor.after)) {
+
+					newTask.afters = [descriptor.after];
+					newTask.afters = newTask.afters.concat(globalAfterEachFunctions);
+				} else {
+					globalErrorHandler('provided after function is not a function.');
+				}
+
+			} else {
+				newTask.afters = globalAfterEachFunctions;
+			}
 
 		} else if (util.isString(descriptor)) {
 
 			// this is a path to an executable
-
+			newTask.name = utils.getBaseFileName(descriptor);
+			newTask.command = buildExecutableCommand(descriptor);
+			newTask.afters = globalAfterEachFunctions;
+			
 		}
+
+		orderedTaskList.push(newTask);
 
 	};
 
