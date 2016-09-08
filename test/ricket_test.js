@@ -11,13 +11,14 @@ describe('Ricket', function() {
         	
         	let e = undefined;
         	
-        	try{
+        	try {
 
             	ricket.add().add().add();
 
             } catch (ex) {
 
             	e = ex;
+                console.log(e);
             	
             }
 
