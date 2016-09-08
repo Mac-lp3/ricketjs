@@ -1,26 +1,28 @@
 'use strict';
 
-const isObject = (varToCheck) => {
-	return Object.prototype.toString.call(varToCheck) == '[object Object]';
-};
+module.exports = (function() {
 
-const isString = (varToCheck) => {
-	return Object.prototype.toString.call(varToCheck) == '[object String]';
-};
+	const isObject = (varToCheck) => {
+		return Object.prototype.toString.call(varToCheck) == '[object Object]';
+	};
 
-const isArray = (varToCheck) => {
-	return Object.prototype.toString.call(varToCheck) == '[object Array]';
-};
+	const isString = (varToCheck) => {
+		return Object.prototype.toString.call(varToCheck) == '[object String]';
+	};
 
-const isFunction = (varToCheck) => {
-	return Object.prototype.toString.call(varToCheck) == '[object Function]';
-};
+	const isArray = (varToCheck) => {
+		return Object.prototype.toString.call(varToCheck) == '[object Array]';
+	};
 
-const util = {
-	isArray: isArray,
-	isObject: isObject,
-	isString: isString,
-	isFunction: isFunction
-};
+	const isFunction = (varToCheck) => {
+		return Object.prototype.toString.call(varToCheck) == '[object Function]';
+	};
 
-module.exports = util;
+	return {
+		isArray: isArray,
+		isObject: isObject,
+		isString: isString,
+		isFunction: isFunction
+	};
+
+})();
