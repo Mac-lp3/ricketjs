@@ -5,7 +5,7 @@ const validate = require('../js/validate');
 
 describe('validate', function() {
     
-    describe('#buildTask()', function() {
+    describe('#filePath()', function() {
 
         it('Should interpret each type', function() {
         	
@@ -14,13 +14,34 @@ describe('validate', function() {
         	try {
 
             	validate.filePath('test\\path');
-            	validate.descriptor({name: 'test name'});
 
             } catch (ex) {
 
             	e = ex;
                 console.log(e);
             	
+            }
+
+            assert(e == undefined);
+            
+        });
+    });
+
+    describe('#descriptor()', function() {
+
+        it('Validate an object descriptor of an executable', function() {
+            
+            let e = undefined;
+            
+            try {
+
+                validate.descriptor({name: 'test name'});
+
+            } catch (ex) {
+
+                e = ex;
+                console.log(e);
+                
             }
 
             assert(e == undefined);
