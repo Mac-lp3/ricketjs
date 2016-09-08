@@ -1,6 +1,6 @@
 'use strict';
 
-const util = require('./utils');
+const utils = require('./utils');
 const fs = require('fs');
 
 module.exports = (function() {
@@ -11,24 +11,24 @@ module.exports = (function() {
 	const globalAfterEachFunctions = [];
 	const orderedTaskList = [];
 
-	const globalErrorHandler = function (ex) {
+	const globalErrorHandler = (ex) => {
 		throw ex;
 	};
 
-	const buildTask  = function(descriptor) {
+	const buildTask = (descriptor) => {
 
 		const newTask = {};
 		newTask.befores = globalBeforeEachFunctions;
 		newTask.errorHandler = globalErrorHandler;
 
-		if (util.isFunction(descriptor)) {
+		if (utils.isFunction(descriptor)) {
 
 			// this is a middleware function
 			newTask.name = descriptor.name;
 			newTask.command = descriptor;
 			newTask.afters = globalAfterEachFunctions;
 
-		} else if (util.isObject(descriptor)) {
+		} else if (utils.isObject(descriptor)) {
 
 			// this is an executable configuration
 			newTask.name = descriptor.name;
@@ -37,7 +37,7 @@ module.exports = (function() {
 			// custom before runs LAST in before list
 			if (descriptor.before) {
 
-				if(util.isFunction(descriptor.before)) {
+				if(utils.isFunction(descriptor.before)) {
 
 					newTask.befores.push(descriptor.before);
 
@@ -49,7 +49,7 @@ module.exports = (function() {
 			// custom after runs FIRST in after list
 			if (descriptor.after) { 
 
-				if (util.isFunction(descriptor.after)) {
+				if (utils.isFunction(descriptor.after)) {
 
 					newTask.afters = [descriptor.after];
 					newTask.afters = newTask.afters.concat(globalAfterEachFunctions);
@@ -61,7 +61,7 @@ module.exports = (function() {
 				newTask.afters = globalAfterEachFunctions;
 			}
 
-		} else if (util.isString(descriptor)) {
+		} else if (utils.isString(descriptor)) {
 
 			// this is a path to an executable
 			newTask.name = utils.getBaseFileName(descriptor);
@@ -74,7 +74,16 @@ module.exports = (function() {
 
 	};
 
-	const buildExecutableCommand = function (descriptor) {
+	const buildExecutableCommand = (descriptor) => {
+
+		let pathToExe = '';
+
+		// get the path to the executable
+		if (utils.isString(descriptor)) {
+			pathToExe = descriptor;
+		} else {
+			pathToExe = descriptor.path;
+		}
 
 		// get name
 		// assemple action () if not function
@@ -83,7 +92,7 @@ module.exports = (function() {
 
 	};
 
-	const clearAll = function () {
+	const clearAll = () => {
 
 		orderedTaskList.length = 0;
 		globalAfterFunctions.length = 0;
@@ -93,7 +102,7 @@ module.exports = (function() {
 
 	};
 
-	const getOrderedTaskList = function() {
+	const getOrderedTaskList = () => {
 		return orderedTaskList;
 	};
 
