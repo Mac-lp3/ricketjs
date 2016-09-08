@@ -9,6 +9,18 @@ module.exports = (function() {
 	 */
 	const validateFilePath = function(pathToValidate) {
 
+		let isValid = false;
+
+		if (utils.isString(pathToValidate)) {
+			
+			if (pathToValidate.indexOf('.') != -1) {
+			
+				isValid = true;
+			}
+		}
+
+		return isValid;
+
 	};
 
 	/*
@@ -18,6 +30,7 @@ module.exports = (function() {
 	 */
 	const validateDescriptor = function(descriptorToValidate) {
 
+		// TODO logging
 		let isValid = false;
 
 		// should delegate to validateFilePath();
