@@ -2,6 +2,7 @@
 
 const utils = require('./utils');
 const fs = require('fs');
+const spawn = require('child_process').spawnSync;
 
 module.exports = (function() {
 
@@ -77,18 +78,44 @@ module.exports = (function() {
 	const buildExecutableCommand = (descriptor) => {
 
 		let pathToExe = '';
+		let givenArguments = [];
 
 		// get the path to the executable
 		if (utils.isString(descriptor)) {
+
+			// if descriptor is a string, then use it
 			pathToExe = descriptor;
+
 		} else {
+
+			// if this is an object, extract the pathand  arguments
 			pathToExe = descriptor.path;
+			givenArguments = descriptor.args;
 		}
 
-		// get name
-		// assemple action () if not function
-		// extract before/after
-		let task = {};
+
+		const command = function(args, next) {
+
+			// add the additional arguments, if any
+			args = args.concat(descriptor.givenArguments);
+
+			const out = spawn(path, args);
+
+			// check for errors and throw if found.
+			if (out.stderr && out.stderr.length != 0) {
+				throw out.stderr.toString();
+			}
+
+			if (out.error) {
+				throw out.error
+			}
+
+			// return output otherwise.
+			return next(out.output);
+
+		};
+
+		return command;
 
 	};
 
