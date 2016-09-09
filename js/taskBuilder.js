@@ -12,7 +12,7 @@ module.exports = (function() {
 	const globalAfterEachFunctions = [];
 	const orderedTaskList = [];
 
-	const globalErrorHandler = (ex) => {
+	let globalErrorHandler = (ex) => {
 		throw ex;
 	};
 
@@ -101,13 +101,13 @@ module.exports = (function() {
 
 			const out = spawn(path, args);
 
-			// check for errors and throw if found.
+			// check for errors and pass to error handler if found.
 			if (out.stderr && out.stderr.length != 0) {
-				throw out.stderr.toString();
+				globalErrorHandler(out.stderr.toString());
 			}
 
 			if (out.error) {
-				throw out.error
+				globalErrorHandler(out.error);
 			}
 
 			// return output otherwise.
@@ -133,11 +133,20 @@ module.exports = (function() {
 		return orderedTaskList;
 	};
 
+	const setErrorHandler = (handler) => {
+
+		if (!utils.isFunction(handler)) {
+			globalErrorHandler('Non-function object passed as error handler.');
+		} else {
+			globalErrorHandler = handler;
+		}
+	};
 
 	return {
 		buildTask: buildTask,
 		clearAll: clearAll,
-		getTaskList: getOrderedTaskList
+		getTaskList: getOrderedTaskList,
+		setErrorHandler: setErrorHandler
 	};
 
 })();
