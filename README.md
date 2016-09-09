@@ -33,6 +33,7 @@ const validateFirst = function(outputFromLast, next) {
         outputFromLast.push('worked!');
     }
     
+    // outputFromLast will be used as arguments for the next task.
     next(outputFromLast);
 };
 
