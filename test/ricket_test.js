@@ -25,4 +25,34 @@ describe('Ricket', function() {
             assert(e == undefined);
         });
     });
+
+    describe('#add()', function() {
+
+        it('should add each type of task', function() {
+            
+            let e = undefined;
+            
+            try {
+                
+                ricket.clear()
+                ricket.add([function(args, next) {
+
+                    return next(true);
+
+                }, 'someTask.exe', {
+
+                    path: 'someOtherTask.exe'
+
+                } ]);
+
+            } catch (ex) {
+
+                e = ex;
+                console.log(e);
+                
+            }
+
+            assert(e == undefined);
+        });
+    });
 });
