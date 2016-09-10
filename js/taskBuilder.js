@@ -11,6 +11,14 @@ module.exports = (function() {
 	const globalBeforeEachFunctions = [];
 	const globalAfterEachFunctions = [];
 	const orderedTaskList = [];
+	const terminateTask = {
+		name: 'endOfTasks',
+		befores: [],
+		afters: [],
+		command: function (args, next) {
+			return args;
+		}
+	};
 
 	let globalErrorHandler = (ex) => {
 		throw ex;
@@ -133,6 +141,10 @@ module.exports = (function() {
 		return orderedTaskList;
 	};
 
+	const getTerminateTask = () => {
+		return terminateTask;
+	};
+
 	const setErrorHandler = (handler) => {
 
 		if (!utils.isFunction(handler)) {
@@ -146,7 +158,8 @@ module.exports = (function() {
 		buildTask: buildTask,
 		clearAll: clearAll,
 		getTaskList: getOrderedTaskList,
-		setErrorHandler: setErrorHandler
+		setErrorHandler: setErrorHandler,
+		getTerminateTask: getTerminateTask
 	};
 
 })();
