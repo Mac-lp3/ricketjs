@@ -17,7 +17,7 @@ module.exports = (function() {
 
 			// if array, recursive call for each member
 			descriptor.map((val) => {
-				this.add(val);				
+				add(val);				
 			});
 
 		} else {
@@ -40,26 +40,41 @@ module.exports = (function() {
 	 */
 	const execute = (valsFromPrevious) => {
 
-		// if current index == 0, just jump to befores.
-		// if next index > list lenth, pass in end function.
+		// get the last task's after functions
+		let afterFunctions = [];
 
-		// get previous task.
-		// does it have any afters?
-		// run them, with valsFromPrevious, updating valsFromPrevious
-		// get current task
-		// any befores? 
-		// run them, with valsFromPrevious, updating valsFromPrevious
-		// update current task index.
-		// run the command with valsFromPrevious.
+		if (currentTaskIndex) {
+			afterFunctions = taskBuilder.getTaskList()[currentTaskIndex - 1].afters;
+		}
+
+		let argsToPass = valsFromPrevious;
+		afterFunctions.map((func) => {
+			argsToPass = func(argsToPass);
+		});
+
+		// get the next task, or the termination task
+		let nextTask = {};
+		if (currentTaskIndex + 1 < taskBuilder.getTaskList().lenght) { 
+			nextTask = taskBuilder.getTerminateTask();
+		} else {
+			nextTask = taskBuilder.getTaskList()[currentTaskIndex];
+		}
+
+		let befores = [];
+		beforeFunctions = nextTask.befores;
+
+		beforeFunctions.map((func) => {
+			argsToPass = func(argsToPass);
+		});
+
+		++currentTaskIndex;
+
+		nextTask.command(argsToPass, execute);
 
 	};
 
-	const endExecution = (valsFromPrevious) => {
-		return valsFromPrevious;
-	},
-
 	const resetState = () => {
-		taskBuilder.clear();
+		taskBuilder.clearAll();
 		currentTaskIndex = 0;
 	};
 
