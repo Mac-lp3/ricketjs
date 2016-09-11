@@ -3,6 +3,7 @@
 const utils = require('./utils');
 const fs = require('fs');
 const spawn = require('child_process').spawnSync;
+const path = require('path');
 
 module.exports = (function() {
 
@@ -92,22 +93,23 @@ module.exports = (function() {
 		if (utils.isString(descriptor)) {
 
 			// if descriptor is a string, then use it
-			pathToExe = descriptor;
+			pathToExe = path.join(__dirname, descriptor);
 
 		} else {
 
 			// if this is an object, extract the pathand  arguments
-			pathToExe = descriptor.path;
+			pathToExe = path.join(__dirname, descriptor.path);
 			givenArguments = descriptor.args;
 		}
-
 
 		const command = function(args, next) {
 
 			// add the additional arguments, if any
-			args = args.concat(descriptor.givenArguments);
+			let aggregatedArguments = [];
+			aggregatedArguments.concat(descriptor.givenArguments);
+			aggregatedArguments.concat(args);
 
-			const out = spawn(path, args);
+			const out = spawn(pathToExe, aggregatedArguments);
 
 			// check for errors and pass to error handler if found.
 			if (out.stderr && out.stderr.length != 0) {
