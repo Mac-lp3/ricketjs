@@ -15,8 +15,8 @@ describe('taskBuilder', function() {
         	try {
 
                 taskBuilder.clearAll();
-            	taskBuilder.buildTask('test\\path');
-            	taskBuilder.buildTask({name: 'test name'});
+            	taskBuilder.buildTask('bat/first.sh');
+            	taskBuilder.buildTask({name: 'test name', path: 'bat/first.sh'});
             	taskBuilder.buildTask(function testFunction() {
             		return true;
             	});
