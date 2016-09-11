@@ -1,3 +1,1 @@
-ECHO I am first.bat
-
-EXIT /B 0
+ECHO "I am first.bat"
