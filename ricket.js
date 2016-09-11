@@ -55,7 +55,7 @@ module.exports = (function() {
 		// get the next task, or the termination task
 		let nextTask = {};
 		
-		if (currentTaskIndex + 1 < taskBuilder.getTaskList().length) { 
+		if (currentTaskIndex + 1 > taskBuilder.getTaskList().length) { 
 			nextTask = taskBuilder.getTerminateTask();
 		} else {
 			nextTask = taskBuilder.getTaskList()[currentTaskIndex];
