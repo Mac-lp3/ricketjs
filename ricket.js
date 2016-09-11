@@ -21,7 +21,7 @@ module.exports = (function() {
 			});
 
 		} else {
-
+			
 			// pass descriptor into action builder
 			taskBuilder.buildTask(descriptor);
 		}
@@ -54,14 +54,15 @@ module.exports = (function() {
 
 		// get the next task, or the termination task
 		let nextTask = {};
-		if (currentTaskIndex + 1 < taskBuilder.getTaskList().lenght) { 
+		
+		if (currentTaskIndex + 1 < taskBuilder.getTaskList().length) { 
 			nextTask = taskBuilder.getTerminateTask();
 		} else {
 			nextTask = taskBuilder.getTaskList()[currentTaskIndex];
 		}
 
 		let befores = [];
-		beforeFunctions = nextTask.befores;
+		let beforeFunctions = nextTask ? nextTask.befores : [];
 
 		beforeFunctions.map((func) => {
 			argsToPass = func(argsToPass);
