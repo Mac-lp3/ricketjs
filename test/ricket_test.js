@@ -39,9 +39,9 @@ describe('Ricket', function() {
 
                     return next(true);
 
-                }, 'someTask.exe', {
+                }, '../test/bat/first.sh', {
 
-                    path: 'someOtherTask.exe'
+                    path: '../test/bat/second.sh'
 
                 } ]);
 
@@ -52,7 +52,40 @@ describe('Ricket', function() {
                 
             }
 
-            assert(e == undefined);
         });
     });
+
+    describe('#run()', function() {
+
+        it('It should execute each middleware/script in the config', function() {
+            
+            let e = undefined;
+            
+            try {
+                
+                ricket.clear()
+                ricket.add([function(args, next) {
+
+                    return next(true);
+
+                }, '../test/bat/first.sh', {
+
+                    path: '../test/bat/second.sh'
+
+                } ]);
+
+                ricket.run();
+
+            } catch (ex) {
+
+                e = ex;
+                console.log(e);
+                
+            }
+
+            assert(e == undefined);
+
+        });
+    });
+
 });
