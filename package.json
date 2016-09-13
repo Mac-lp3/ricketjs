@@ -1,6 +1,6 @@
 {
   "name": "ricketjs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Framework for simple chaining of executable file execution and middleware functions.",
   "main": "ricket.js",
   "repository": {
@@ -11,7 +11,10 @@
     "test": "mocha"
   },
   "keywords": [
-    "shell", "batch", "script", "framework"
+    "shell",
+    "batch",
+    "script",
+    "framework"
   ],
   "author": "Mac <staticlp3@gmail.com>",
   "license": "MIT"
