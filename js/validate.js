@@ -9,10 +9,13 @@ module.exports = (function() {
 	 */
 	const validateFilePath = function(pathToValidate) {
 
+		// TODO logging
 		let isValid = false;
 
+		// make sure it is a string
 		if (utils.isString(pathToValidate)) {
 			
+			// make sure there is a file extention
 			if (pathToValidate.indexOf('.') != -1) {
 			
 				isValid = true;
