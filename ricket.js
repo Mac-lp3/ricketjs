@@ -52,7 +52,8 @@ module.exports = (function() {
 	 */
 	const execute = (valsFromPrevious) => {
 
-		// TODO wrap valsFromPerevious
+		
+		valsFromPrevious = util.wrapArguments(valsFromPrevious);
 
 		// get the last task's after functions
 		let afterFunctions = [];
@@ -64,6 +65,7 @@ module.exports = (function() {
 		let argsToPass = valsFromPrevious;
 		afterFunctions.map((func) => {
 			argsToPass = func(argsToPass);
+			argsToPass = util.wrapArguments(argsToPass);
 		});
 
 		// get the next task, or the termination task
@@ -80,6 +82,7 @@ module.exports = (function() {
 
 		beforeFunctions.map((func) => {
 			argsToPass = func(argsToPass);
+			argsToPass = util.wrapArguments(argsToPass);
 		});
 
 		++currentTaskIndex;
