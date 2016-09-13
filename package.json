@@ -3,9 +3,16 @@
   "version": "1.0.0",
   "description": "Framework for simple chaining of executable file execution and middleware functions.",
   "main": "ricket.js",
-  "scripts": {
-    "test": "test"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mac-lp3/ricketjs"
   },
-  "author": "Mac-lp3",
-  "license": "ISC"
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "shell", "batch", "script", "framework"
+  ],
+  "author": "Mac <staticlp3@gmail.com>",
+  "license": "MIT"
 }
