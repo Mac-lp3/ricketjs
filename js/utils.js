@@ -2,6 +2,23 @@
 
 module.exports = (function() {
 
+	const wrapArguments = (args) => {
+
+		if (isArray(args)) {
+			
+			return args;
+
+		} else if (!args) {
+
+			return [];
+
+		} else {
+
+			return [args];
+		}
+
+	};
+
 	const getBaseFileName = (stringFilePath, includeExtention) => {
 
 		let baseName = '';
@@ -49,7 +66,8 @@ module.exports = (function() {
 		isArray: isArray,
 		isObject: isObject,
 		isString: isString,
-		isFunction: isFunction
+		isFunction: isFunction,
+		wrapArguments: wrapArguments
 	};
 
 })();
