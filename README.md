@@ -65,9 +65,9 @@ ricket.options({
 
 Ricketjs currently supports the following options:
 
-* beforeAll (`function(arguments)`) - An easy way to insert a function into each existing script/middleware's before list. Note that before and after functions are inserted CLOSEST to the actual task to run, meaning `beforeAll()` will insert the function at the end of the before list 0.
+* beforeEach (`function(arguments)`) - An easy way to insert a function into each existing script/middleware's before list. Note that before and after functions are inserted CLOSEST to the actual task to run, meaning `beforeEach()` will insert the function at the end of the before list 0.
 
-* afterAll (`function(arguments)`) - An easy way to insert a function into each existing script/middleware's after list. Note that before and after functions are inserted CLOSEST to the actual task to run, meaning `afterAll()` will insert the function at position 0.
+* afterEach (`function(arguments)`) - An easy way to insert a function into each existing script/middleware's after list. Note that before and after functions are inserted CLOSEST to the actual task to run, meaning `afterEach()` will insert the function at position 0.
 
 * errorHandler (`function(errorString)`) - The default error handler will simply throw all exceptions encountered or will throw custom messages depending on the nature of the error. If you would like errors to be logged in a specific way, you can specify a function to do so.
 
