@@ -1,18 +1,27 @@
 # ricketjs
-Simple plug-and-play javascript framework for running executable files.
+
+Simple javascript framework for running executable files.
 
 ## Usage
 
+When adding an executable to the chain, you can either specify a script descriptor:
+
 ~~~~
 ricket.add({
-    path: 'path\\to\\executable.exe',
-    args: ['okok'], // optional
+    path: 'path\\to\\script.sh',
+    args: ['these', 'are', 'optional'],
     before: function(args){ /* optional */ return args.push('additionalArg');},
     after: function(output){ /* optional */ console.log(output);}
 }).run();
 ~~~~
 
-The `add()` method is chainable and also accepts just a string path
+Or just the relative path:
+
+~~~~
+ricket.add('path\\to\\script.sh').run();
+~~~~
+
+The `add()` method is also chainable to simplify running multiple executables:
 
 ~~~~
 ricket.add({
@@ -24,23 +33,27 @@ ricket.add({
 .add('path\\to\\next\\executable.bat').run();
 ~~~~
 
-Ricketjs also supports middleware functions. Just make sure they follow the `function(output, next)` signature.
+Ricketjs supports middleware functions with the `function(outputFromLast, next)` signature, where `next` is the next script or middle ware function in the chain.
 
 ~~~~
+// outputFromLast will be null if this is the first on the chain
 const validateFirst = function(outputFromLast, next) {
     
     if (outputFromLast && outputFromLast.length > 0) {
         outputFromLast.push('worked!');
     }
     
-    // outputFromLast will be used as arguments for the next task.
+    // Edit / remove arguments before passing them on
     next(outputFromLast);
 };
 
 ricket.add({
     path: 'path\\to\\executable.exe',
-    args: ['okok']
+    args: ['gogogo']
 })
 .add(validateFirst)
 .add('path\\to\\next\\executable.bat').run();
 ~~~~
+
+## Configuration
+
