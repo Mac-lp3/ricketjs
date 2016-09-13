@@ -88,4 +88,89 @@ describe('Ricket', function() {
         });
     });
 
+    describe('#run()', function() {
+
+        it('It should execute in order and pass results properly', function() {
+            
+            let e = undefined;
+            
+            try {
+                
+                ricket.clear()
+
+                ricket.add([function(args, next) {
+
+                    console.log('starting')
+                    return next(true);
+
+                }, {
+
+                    path: '../test/bat/first.sh',
+                    args: []
+
+                }, function(args, next) {
+
+                    console.log(args.toString());
+                    next(args);
+
+                }]);
+
+                ricket.run();
+
+            } catch (ex) {
+
+                e = ex;
+                console.log(e);
+                
+            }
+
+            assert(e == undefined);
+
+        });
+    });
+
+    describe('#options()', function() {
+
+        it('Should set and reset error handler as expected', function() {
+            
+            let e = undefined;
+            
+            try {
+                
+                ricket.clear();
+
+                let errHandled = false;
+                ricket.options({
+                    errorHandler: function(st){
+                        errHandled = true;
+                    }
+                });
+
+                ricket.options({
+                    beforeEach: 'breakIt'
+                });
+
+            } catch (ex) {
+
+                e = ex;
+                console.log(e);
+                
+            }
+
+            try {
+
+                ricket.clear();
+                ricket.options({
+                    afterEach: 'breakIt'
+                });
+
+            } catch (ex) {
+                e = ex;
+            }
+
+            assert(e);
+
+        });
+    });
+
 });
