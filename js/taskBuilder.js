@@ -106,8 +106,9 @@ module.exports = (function() {
 
 			// add the additional arguments, if any
 			let aggregatedArguments = [];
-			aggregatedArguments.concat(descriptor.givenArguments);
-			aggregatedArguments.concat(args);
+			aggregatedArguments = aggregatedArguments.concat(
+				utils.wrapArguments(descriptor.givenArguments));
+			aggregatedArguments = aggregatedArguments.concat(args);
 
 			const out = spawn(pathToExe, aggregatedArguments);
 
@@ -136,6 +137,10 @@ module.exports = (function() {
 		globalBeforeFunctions.length = 0;
 		globalAfterEachFunctions.length = 0;
 		globalBeforeEachFunctions.length = 0;
+		
+		globalErrorHandler = (ex) => {
+			throw ex;
+		};
 
 	};
 
