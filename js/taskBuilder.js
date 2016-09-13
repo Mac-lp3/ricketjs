@@ -94,11 +94,13 @@ module.exports = (function() {
 
 			// if descriptor is a string, then use it
 			pathToExe = path.join(__dirname, descriptor);
+			pathToExe = descriptor;
 
 		} else {
 
 			// if this is an object, extract the pathand  arguments
-			pathToExe = path.join(__dirname, descriptor.path);
+			// pathToExe = path.join(__dirname, descriptor.path);
+			pathToExe = descriptor.path;
 			givenArguments = descriptor.args;
 		}
 
@@ -110,7 +112,12 @@ module.exports = (function() {
 				utils.wrapArguments(descriptor.givenArguments));
 			aggregatedArguments = aggregatedArguments.concat(args);
 
-			const out = spawn(pathToExe, aggregatedArguments);
+			let out = '';
+			try {
+				out = spawn(pathToExe, aggregatedArguments);
+			} catch (ex) {
+				globalErrorHandler(ex);
+			}
 
 			// check for errors and pass to error handler if found.
 			if (out.stderr && out.stderr.length != 0) {

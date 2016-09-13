@@ -39,9 +39,9 @@ describe('Ricket', function() {
 
                     return next(true);
 
-                }, '../test/bat/first.sh', {
+                }, '/Users/Home/Documents/dev/General\ Projects/ricketjs/test/bat/first.sh ', {
 
-                    path: '../test/bat/second.sh'
+                    path: '/Users/Home/Documents/dev/General\ Projects/ricketjs/test/bat/second.sh'
 
                 } ]);
 
@@ -68,9 +68,9 @@ describe('Ricket', function() {
 
                     return next(true);
 
-                }, '../test/bat/first.sh', {
+                }, '/Users/Home/Documents/dev/General\ Projects/ricketjs/test/bat/first.sh', {
 
-                    path: '../test/bat/second.sh'
+                    path: '/Users/Home/Documents/dev/General\ Projects/ricketjs/test/bat/second.sh'
 
                 } ]);
 
@@ -105,7 +105,7 @@ describe('Ricket', function() {
 
                 }, {
 
-                    path: '../test/bat/first.sh',
+                    path: '/Users/Home/Documents/dev/General\ Projects/ricketjs/test/bat/first.sh',
                     args: []
 
                 }, function(args, next) {
