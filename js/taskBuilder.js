@@ -150,10 +150,48 @@ module.exports = (function() {
 	const setErrorHandler = (handler) => {
 
 		if (!utils.isFunction(handler)) {
-			globalErrorHandler('Non-function object passed as error handler.');
+			globalErrorHandler('Non-function passed as error handler.');
 		} else {
 			globalErrorHandler = handler;
 		}
+	};
+
+	const addBeforeEach = (beforeFunction) => {
+
+		if (!utils.isFunction(beforeFunction)) {
+			
+			globalErrorHandler('Non-function passed into beforeEach.');
+
+		} else {
+
+			// add it to the list of befores
+			globalBeforeEachFunctions.push(beforeFunction);
+
+			// if any task already exist, update their list as well.
+			orderedTaskList.map((task) => {
+				task.befores.push(beforeFunction);
+			});
+		}
+
+	};
+
+	const addAfterEach = (afterFunction) => {
+
+		if (!utils.isFunction(afterFunction)) {
+			
+			globalErrorHandler('Non-function passed into afterEach.');
+
+		} else {
+
+			// add it to the list of afters
+			globalAfterEachFunctions.push(afterFunction);
+
+			// if any task already exist, update their list as well.
+			orderedTaskList.map((task) => {
+				task.afters.unshift(afterFunction);
+			});
+		}
+
 	};
 
 	return {
@@ -161,7 +199,9 @@ module.exports = (function() {
 		clearAll: clearAll,
 		getTaskList: getOrderedTaskList,
 		setErrorHandler: setErrorHandler,
-		getTerminateTask: getTerminateTask
+		getTerminateTask: getTerminateTask,
+		addBeforeEach: addBeforeEach,
+		addAfterEach: addAfterEach
 	};
 
 })();
