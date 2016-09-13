@@ -31,6 +31,18 @@ module.exports = (function() {
 
 	const configure = (obj) => {
 
+		if (obj.beforeEach) {
+			taskBuilder.addBeforeEach(obj.beforeEach);
+		}
+
+		if (obj.afterEach) {
+			taskBuilder.addAfterEach(obj.afterEach);
+		}
+
+		if (obj.errorHandler) {
+			taskBuilder.setErrorHandler(obj.errorHandler);
+		}
+
 		return interfaze;
 	};
 
@@ -39,6 +51,8 @@ module.exports = (function() {
 	 * argument transmission.
 	 */
 	const execute = (valsFromPrevious) => {
+
+		// TODO wrap valsFromPerevious
 
 		// get the last task's after functions
 		let afterFunctions = [];
