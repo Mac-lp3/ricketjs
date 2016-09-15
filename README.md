@@ -1,3 +1,6 @@
+[![Coverage Status](https://coveralls.io/repos/github/Mac-lp3/ricketjs/badge.svg?branch=master)](https://coveralls.io/github/Mac-lp3/ricketjs?branch=master)
+
+
 # ricketjs
 
 Simple javascript framework for running executable files.
@@ -15,7 +18,7 @@ ricket.add({
 }).run();
 ~~~~
 
-Or just the relative path:
+Or just the absolute path:
 
 ~~~~
 ricket.add('path\\to\\script.sh').run();
