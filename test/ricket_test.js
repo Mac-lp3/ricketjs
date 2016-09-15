@@ -90,6 +90,51 @@ describe('Ricket', function() {
 
     describe('#run()', function() {
 
+        it('Should execute a seriese of functions, passing the output as expected', function() {
+            
+            let e = undefined;
+            
+            try {
+                
+                ricket.clear()
+                ricket.add(function(args, next) {
+
+                    next('first');
+
+                }, function(args, next) {
+
+                    assert(args[0] === 'first');
+                    args.push('second');
+                    console.log(args);
+
+                    next(args);
+
+                }, function(args, next) {
+
+                    assert(args[0] === 'first');
+                    assert(args[1] === 'second');
+                    console.log(args);
+
+                    next(args);
+
+                });
+
+                ricket.run();
+
+            } catch (ex) {
+
+                e = ex;
+                console.log(e);
+                
+            }
+
+            assert(e == undefined);
+
+        });
+    });
+
+    describe('#run()', function() {
+
         it('It should execute in order and pass results properly', function() {
             
             let e = undefined;
