@@ -15,7 +15,7 @@ ricket.add({
 }).run();
 ~~~~
 
-Or just the relative path:
+Or just the absolute path:
 
 ~~~~
 ricket.add('path\\to\\script.sh').run();
